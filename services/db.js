@@ -22,8 +22,15 @@ async function initDB() {
     })
 }
 
+function fixText(txt) {
+    const newText = txt.replace(/'/g, "''");
+
+    return newText;
+}
+
 module.exports = {
     db: db,
     getDbAvailable,
-    initDB
+    initDB,
+    fixText
 };

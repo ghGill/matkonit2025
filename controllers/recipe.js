@@ -1,4 +1,4 @@
-const { db } = require('../services/db');
+const { db, fixText } = require('../services/db');
 
 class recipeController {
     constructor() {
@@ -24,11 +24,11 @@ class recipeController {
                     (category_id, name, ingredients, preparation, comments, image)
                     VALUES (
                         ${data.category_id}, 
-                        '${data.name}', 
-                        '${data.ingredients}', 
-                        '${data.preparation}',
-                        '${data.comments}',
-                        '${data.image}'
+                        '${fixText(data.name)}', 
+                        '${fixText(data.ingredients)}', 
+                        '${fixText(data.preparation)}',
+                        '${fixText(data.comments)}',
+                        '${fixText(data.image)}'
                     );
                 `;
 
@@ -61,11 +61,11 @@ class recipeController {
             const sql = `
                 UPDATE recipes 
                     SET category_id = ${data.category_id},
-                    name = '${data.name}', 
-                    ingredients = '${data.ingredients}', 
-                    preparation = '${data.preparation}',
-                    comments = '${data.comments}',
-                    image = '${data.image}'
+                    name = '${fixText(data.name)}', 
+                    ingredients = '${fixText(data.ingredients)}', 
+                    preparation = '${fixText(data.preparation)}',
+                    comments = '${fixText(data.comments)}',
+                    image = '${fixText(data.image)}'
                     WHERE id = '${data.id}'
             `;
 
