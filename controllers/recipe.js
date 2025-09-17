@@ -21,8 +21,15 @@ class recipeController {
 
             const sql = `
                     INSERT INTO recipes 
-                    (category_id, name, ingredients, preparation)
-                    VALUES ('${data.category_id}', '${data.name}', '${data.ingredients}', '${data.preparation}');
+                    (category_id, name, ingredients, preparation, comments, image)
+                    VALUES (
+                        ${data.category_id}, 
+                        '${data.name}', 
+                        '${data.ingredients}', 
+                        '${data.preparation}',
+                        '${data.comments}',
+                        '${data.image}'
+                    );
                 `;
 
             const [result] = await db.connection.execute(sql);
@@ -49,17 +56,22 @@ class recipeController {
 
     async updateRecipe(req, res) {
         try {
-            const { id, name, category_id, ingredients, preparation } = req.body.data;
+            const { data } = req.body;
 
-            const [result] = await db.connection.execute(`UPDATE recipes 
-                SET category_id = '${category_id}',
-                name = '${name}', 
-                ingredients = '${ingredients}', 
-                preparation = '${preparation}'
-                WHERE id = '${id}'`
-            );
+            const sql = `
+                UPDATE recipes 
+                    SET category_id = ${data.category_id},
+                    name = '${data.name}', 
+                    ingredients = '${data.ingredients}', 
+                    preparation = '${data.preparation}',
+                    comments = '${data.comments}',
+                    image = '${data.image}'
+                    WHERE id = '${data.id}'
+            `;
 
-            res.status(200).json({ success: true, id:id })
+            const [result] = await db.connection.execute(sql);
+
+            res.status(200).json({ success: true, id:data.id })
         }
         catch (e) {
             res.status(500).json({ success: false, message: e.message })
