@@ -22,10 +22,11 @@ async function initDB() {
     })
 }
 
-function fixText(txt) {
-    const newText = txt.replace(/'/g, "''");
+function fixText(txt=null) {
+    if (txt)
+        return txt.replace(/'/g, "''");
 
-    return newText;
+    return '';
 }
 
 module.exports = {
